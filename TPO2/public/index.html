@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="/public/css/main.css">
+  <!--제목-->
+  <title>T.P.O</title>
+  <!--글씨체 적용-->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
+  </style>
+    <script src="https://kit.fontawesome.com/bf640b93a7.js" crossorigin="anonymous"></script>
+
+
+  <!--파비콘-->
+  <!--<link rel="shortcut icon" href="favicon.ico" />-->
+  <link rel="icon" href="/public/heart-01.ico" type="image/x-icon">  
+  <!--브라우저 스타일 초기화-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />  
+  <!--Google Material Icons-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="./css/main.css" />
+
+  <!--GSAP & ScrollToPlugin-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollToPlugin.min.js" integrity="sha512-nTHzMQK7lwWt8nL4KF6DhwLHluv6dVq/hNnj2PBN0xMl2KaMm1PM02csx57mmToPAodHmPsipoERRNn4pG7f+Q==" crossorigin="anonymous"></script>
+  <!--Swiper-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!--ScrollMagic-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <!--Lodash-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+
+  <script src="images/jquery-3.6.0.min.js"></script>
+  <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+  <!--HEADER-->
+  <header>
+    <h1>T. P. O. </h1>
+    <div class="inner">
+      <div class="sub-menu">
+        <ul class="menu">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="login.html">login</a>
+          </li>
+          <li>
+            <a href="index.html" id="logout">logout</a>
+          </li>
+          <li>
+            <a href="upload.html">관리자</a>
+          </li>
+          <li>
+            <a id="userName">  </a>
+          </li>           
+        </ul>
+        <div class="search">
+          <input type="text" />
+          <span class="material-icons">search</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!--날씨소개 및 추천 상자, 메인상자-->
+  <section class="visual">
+    <div class="inner">
+      <div class="title fade-in">
+        <article class="current" style="font-size: 27px;">
+          
+        </article>
+      </div>
+
+      <script>
+          
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+                     
+        } else { 
+            alert("이 브라우저는 GPS를 지원하지 않습니다.");
+          }
+        }
+          
+        function showPosition(position) {
+          var weatherIP = "https://api.openweathermap.org/data/2.5/onecall?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&appid=7667c124fdf9b0b0cc4b2ae61b0fb6a1&units=metric"
+  
+          $.getJSON(weatherIP,
+          function(
+          result){
+          $('.ctemp').empty();
+          $('.lowtemp').empty();
+          $('.hightemp').empty();
+          $('.icon').empty();
+  
+          $('.ctemp').append("현재 온도 : ");
+          $('.lowtemp').append("최저 온도 : ");
+          $('.hightemp').append("최고 온도 : ");
+  
+          $('.ctemp').append(Math.round(result.current.temp)+" °C");
+          $('.lowtemp').append(Math.round(result.daily[0].temp.min)+" °C");
+          $('.hightemp').append(Math.round(result.daily[0].temp.max)+" °C");
+          var wiconUrl = '<img src="http://openweathermap.org/img/wn/'+result.current.weather[0].icon+'.png" alt="'+result.current.weather[0].description+'">'
+          $('.icon').html(wiconUrl);
+          });
+        }
+      </script>
+
+      <div class="box2">
+        <p class="icon"></p>
+                <p class="main-title"> < 오늘의 날씨 ></p>
+                <p class="ctemp">현재 온도 : </p>
+                <p class="lowtemp">최저 온도 : </p>
+                <p class="hightemp">최고 온도 : </p>
+                <button class="gps-btn"onclick="getLocation()" 
+                style="float:right;
+                border-radius: 50%;
+                width:27px;
+                height: 27px;
+                border-right-color: gray;
+                border-left-color: gray;
+                border-bottom-color:gray;"><i class="fa-solid fa-arrows-rotate"></i></button>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+        crossorigin="anonymous"></script>
+      </div>
+      <div class="mainbox">
+        <li class="classify">
+          <p class="title" style="margin-left: 500px;">성별</p>
+          <label><input type="radio" name="gender" value="man" id="radio_man" onclick='getGender(event)' style="margin-left: 100px;"> 남</label>
+          <label><input type="radio" name="gender" value="woman" id="radio_woman" onclick='getGender(event)'> 여</label>
+        </li>
+        <p id="main_main"></p>
+      </div>
+      </div>
+    </div>
+      
+    <script>
+      function getGender(event) {
+        document.getElementById('main_main').innerText = event.target.value;
+      }
+    </script>
+
+     <!--날씨 데이터 연결--> 
+    <script>
+      $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=36.6372&lon=127.4897&appid=7667c124fdf9b0b0cc4b2ae61b0fb6a1&units=metric',
+      function(
+          result){
+          $('.ctemp').append(Math.round(result.current.temp)+" °C");
+          $('.lowtemp').append(Math.round(result.daily[0].temp.min)+" °C");
+          $('.hightemp').append(Math.round(result.daily[0].temp.max)+" °C");
+          var wiconUrl = '<img src="http://openweathermap.org/img/wn/'+result.current.weather[0].icon+'.png" alt="'+result.current.weather[0].description+'">'
+          $('.icon').html(wiconUrl);
+          if(result.current.temp < 28 && result.current.temp > 15)
+          {
+            //상의 배열
+            const top1 = ["긴팔 셔츠","긴팔 슬리브","긴팔니트", ];
+            //랜덤으로 상의를 출력하는 코드
+            function randomValueFromArray(array) {
+              const random = Math.floor(Math.random() * array.length);
+              return array[random];
+            }
+            let pick1= randomValueFromArray(top1);
+            $('.current').append("오늘은 " + pick1 + "에 ");
+            //하의 배열
+            const bottom1 = ["청바지","슬랙스",];
+            //랜덤으로 상의를 출력하는 코드
+            function randomValueFromArray(array) {
+              const random = Math.floor(Math.random() * array.length);
+              return array[random];
+            }
+            let pick2= randomValueFromArray(bottom1);
+            $('.current').append(pick2 + "를 추천합니다");
+          }
+          else if(result.current.temp < 16 && result.current.temp > 10)
+          { //아우터 배열
+            const outer1 = ["가디건","후드집업","블레이저",];
+            //랜덤으로 아우터를 출력하는 코드
+            function randomValueFromArray(array) {
+              const random = Math.floor(Math.random() * array.length);
+              return array[random];
+            }
+            let pick3= randomValueFromArray(outer1);
+            $('.current').append("오늘은 "+pick3 + "에 ");
+            //상의 배열
+            const top1 = ["긴팔 셔츠","긴팔 슬리브","긴팔니트",];
+            //랜덤으로 상의를 출력하는 코드
+            function randomValueFromArray(array) {
+              const random = Math.floor(Math.random() * array.length);
+              return array[random];
+            }
+            let pick1= randomValueFromArray(top1);
+            $('.current').append(pick1 + "에 ");
+            //하의 배열
+            const bottom1 = ["청바지","슬랙스",];
+            //랜덤으로 상의를 출력하는 코드
+            function randomValueFromArray(array) {
+              const random = Math.floor(Math.random() * array.length);
+              return array[random];
+            }
+            let pick2= randomValueFromArray(bottom1);
+            $('.current').append(pick2 + "를 추천합니다");
+          }
+          else if(result.current.temp < 11)
+          {
+            $('.current').append("오늘은 롱패딩 입기 좋은 날씨에요");
+          }
+      });
+      </script>
+    </div>
+  </section>
+
+  <!--TO TOP BUTTON-->
+  <div id="to-top">
+    <div class="material-icons">arrow_upward</div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+  <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBVaapmep0_PuQw1e2gZHXZdRe2AqXhmg4",
+        authDomain: "tpo2-7b5d0.firebaseapp.com",
+        projectId: "tpo2-7b5d0",
+        storageBucket: "tpo2-7b5d0.appspot.com",
+        messagingSenderId: "197250258766",
+        appId: "1:197250258766:web:c9e6260e6a04e30bb9b01f"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    //페이지 마다 아래 코드를 전부 추가해주기
+    var 뺀거 = localStorage.getItem('user');
+
+    if(localStorage.getItem('user') != null){
+      $('#userName').html(JSON.parse(뺀거).displayName)
+    }    
+    firebase.auth().onAuthStateChanged((user)=>{
+    if(user){
+      console.log(user.uid)
+      console.log(user.displayName)
+      localStorage.setItem('user', JSON.stringify(user))
+    }      
+    })
+    //여기까지
+
+    //로그아웃
+    $('#logout').click(function(){
+    alert("로그아웃 되었습니다.");
+    firebase.auth().signOut()
+    localStorage.removeItem('user')
+    })
+      
+    </script>
+   
+</body>
+
+</html>

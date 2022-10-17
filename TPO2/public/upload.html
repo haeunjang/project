@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/upload.css">
+  <!--제목-->
+  <title>T.P.O</title>
+  <!--글씨체 적용-->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
+  </style>
+
+  <!--파비콘-->
+  <!--<link rel="shortcut icon" href="favicon.ico" />-->
+  <link rel="icon" href="/public/image/fabicon.ico" />
+  <!--브라우저 스타일 초기화-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />  
+  <!--Google Material Icons-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="./css/main.css" />
+
+  <!--GSAP & ScrollToPlugin-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollToPlugin.min.js" integrity="sha512-nTHzMQK7lwWt8nL4KF6DhwLHluv6dVq/hNnj2PBN0xMl2KaMm1PM02csx57mmToPAodHmPsipoERRNn4pG7f+Q==" crossorigin="anonymous"></script>
+  <!--Swiper-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!--ScrollMagic-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <!--Lodash-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <!--HEADER-->
+    <header>
+      <h1>T. P. O. </h1>
+      <div class="inner">
+        <div class="sub-menu">
+          <ul class="menu">
+            <li>
+              <a href="index.html">Home</a>
+            </li>
+            <li>
+              <a href="login.html">login</a>
+            </li>
+            <li>
+              <a href="index.html" id="logout">logout</a>
+            </li>
+            <li>
+              <a href="upload.html">관리자</a>
+            </li>
+            <li>
+              <a id="userName">  </a>
+            </li> 
+            <div class="search">
+              <input type="text" />
+              <span class="material-icons">search</span>
+            </div>          
+          </ul>
+          
+        </div>
+      </div>
+    </header>
+
+<section class="visual">
+<div class="inner">
+  <div class="upload_box">
+    <p class="box-title">Upload Clothes</p>
+    <div class="text_container">
+      <li class="classify">
+      <p class="title">성별</p>
+      <label><input type="radio" id="female" name = "gender" placeholder="gender" value="여자"> 여자</input></label>
+      <label><input type ="radio" id="male" name = "gender" placeholder="gender" value="남자"> 남자</input></label>
+      </li>
+      <li class="classify">
+      <p class="title">옷</p>
+      <select id="main_list" name="main_list" onchange="categoryChange(this)">
+        <option>===옷 종류===</option>
+        <option value="상의">상의</option>
+        <option value="하의">하의</option>
+        <option value="아우터">아우터</option>
+        <option value="원피스">원피스</option>
+      </select>
+      
+      <select id="good" name = "sub_list">
+      <option>===세부 정보===</option>
+      </select>
+      <script>
+        function categoryChange(e) {
+          var good_상의 = ["반팔티", "긴팔티", "니트조끼", "반팔셔츠", "긴팔셔츠", "후드티"];
+          var good_하의 = ["청바지","반바지","면바지","치마","슬랙스"];
+          var good_아우터 = ["자켓", "가디건", "코트", "패딩"];
+          var good_원피스 = ["원피스"];
+          var target = document.getElementById("good");
+        
+          if(e.value == "상의") var d = good_상의;
+          else if(e.value == "하의") var d = good_하의;
+          else if(e.value == "아우터") var d = good_아우터;
+          else if(e.value == "원피스") var d = good_원피스;
+        
+          target.options.length = 0;
+        
+          for (x in d) {
+            var opt = document.createElement("option");
+            opt.value = d[x];
+            opt.innerHTML = d[x];
+            target.appendChild(opt);
+          } 
+        }
+      </script>
+      </li>
+      <li class="classify">
+      <p class="title">이미지</p>
+      <label><input class="form-control mt-2" type="file" id="image" style="width:400px;" onchange="setThumbnail(event);"></label>
+      </li>
+    </div>
+
+    <div class="image_container" id="image_container">
+      <script>
+        function setThumbnail(event) {
+        $(".image_container").empty(); 
+        var reader = new FileReader(); 
+
+        reader.onload = function(event) { 
+          var img = document.createElement("img"); 
+          img.setAttribute("src", event.target.result); 
+          document.querySelector("div#image_container").appendChild(img); 
+        }; 
+        
+        reader.readAsDataURL(event.target.files[0]); 
+        } 
+      </script>
+    </div>
+
+    <button class="btn btn-dark mt-3" id="send" style="background-color:rgb(255, 182, 182); margin:auto;">Upload</button>
+  
+  </div>
+
+  <div class="view_box">
+    <p class="box-title">Upload List</p>
+    <div class="list_container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+
+    <script>
+      var firebaseConfig = {
+          apiKey: "AIzaSyBVaapmep0_PuQw1e2gZHXZdRe2AqXhmg4",
+          authDomain: "tpo2-7b5d0.firebaseapp.com",
+          projectId: "tpo2-7b5d0",
+          storageBucket: "tpo2-7b5d0.appspot.com",
+          messagingSenderId: "197250258766",
+          appId: "1:197250258766:web:c9e6260e6a04e30bb9b01f"
+          };
+          firebase.initializeApp(firebaseConfig);
+      </script>
+        <script>
+            const db = firebase.firestore();
+            storage = firebase.storage();
+            storageRef = firebase.storage().ref();
+
+
+            //페이지 마다 아래 코드를 전부 추가해주기
+            var 뺀거 = localStorage.getItem('user');
+
+            if(localStorage.getItem('user') != null){
+              $('#userName').html(JSON.parse(뺀거).displayName)
+            }    
+            firebase.auth().onAuthStateChanged((user)=>{
+            if(user){
+              console.log(user.uid)
+              console.log(user.displayName)
+              localStorage.setItem('user', JSON.stringify(user))
+            }      
+            })
+            //여기까지
+
+            //로그아웃
+            $('#logout').click(function(){
+            alert("로그아웃 되었습니다.");
+            firebase.auth().signOut()
+            localStorage.removeItem('user')
+            })
+
+
+            function delete_product(own_id){
+              if (confirm("정말 삭제하시겠습니까?") == true){
+                
+                db.collection('product').doc(own_id).delete().then(()=>{ 
+                    alert("삭제되었습니다.");
+                    window.location.href = 'upload.html'                 
+                })
+                
+                storageRef.child('image/' + doc(own_id).data().filename).delete().then(()=>{
+                console.log('삭제완료')
+                })
+                                         
+              }             
+            }
+
+            db.collection('product').get().then((결과)=>{
+            결과.forEach((doc)=>{
+                if(JSON.parse(localStorage.getItem('user')).uid==doc.data().uid){
+                var 템플릿 = `<div class="product">
+                <div class="thumbnail" style="background-image: url('${doc.data().이미지}')"></div>
+                <div class="flex-grow-1 p-4">
+                <h5 class="clothes">${doc.data().옷종류}</h5>
+                <p class="gender"> ${doc.data().성별}</p>
+                </div>
+                <button id="edit" class="edit_btn" onclick="location.href = './edit.html?id=${doc.id}'">수정</button>
+                <button class="delete_btn" onclick="delete_product('${doc.id}')">삭제</button>
+                </div>
+                <hr style="border:solid 1px gray">`;
+                // 템플릿.orderBy(doc.data().성별); 정렬 하고싶다,,
+                $('.list_container').append(템플릿);
+              }
+            })
+            })
+            
+            
+        </script>
+        
+       
+       
+</div>
+
+  <script>
+
+      $('#send').click(function(){
+          var file = document.querySelector('#image').files[0];
+          var storageRef = storage.ref();
+          var 저장할경로 = storageRef.child('image/' + file.name);
+          var 업로드작업 = 저장할경로.put(file)
+          // setTimeout(()=>window.location.href = "index.html",500)
+
+          var a=0;
+                  db.collection('product').get().then((결과)=>{
+                    결과.forEach((doc)=>{
+                      
+                      if((doc.data().filename) == (document.getElementById('image').files[0].name)){
+                        a++;
+                      }
+                    })
+                  })
+
+          업로드작업.on( 'state_changed', 
+              // 변화시 동작하는 함수 
+              null, 
+              //에러시 동작하는 함수
+              (error) => {
+              console.error('실패사유는', error);
+              }, 
+              // 성공시 동작하는 함수
+              () => {
+              업로드작업.snapshot.ref.getDownloadURL().then((url) => {
+                                    
+                  if(a >= 1){
+                    alert("이미 업로드 된 옷입니다.");
+            
+                }
+
+                else {
+                  
+                  var 저장할거 = { 
+                          성별 : $('input[name="gender"]:checked').val(),
+                          옷분류 : $('select[name=main_list]').val(),
+                          옷종류 : $('select[name=sub_list]').val(),
+                          이미지 : url,
+                          uid : JSON.parse(localStorage.getItem('user')).uid,
+                          filename : document.getElementById('image').files[0].name
+                      }
+                      db.collection('product').add(저장할거).then((result)=>{
+                          
+                          window.location.href = 'uploadok.html'; //완료, 더 등록할건지 알림 또는 웹페이지
+
+                      }).catch((error)=>{
+                        alert("업로드 권한이 없습니다.");
+                        window.location.href = 'index.html';
+                          console.log(err)
+                          
+                      })
+                 
+                }
+                              
+                  });
+              }
+          );
+
+          
+      });
+
+
+  </script>
+</div>  
+</section>
+</body>
+</html>

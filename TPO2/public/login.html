@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/public/css/login.css">
+    <!--제목-->
+    <title>T.P.O</title>
+    <!--글씨체 적용-->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
+    </style>
+  
+    <!--파비콘-->
+    <link rel="icon" href="/public/image/heart.ico" />
+    <!--브라우저 스타일 초기화-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />  
+    <!--Google Material Icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="./css/main.css" />
+  
+    <!--GSAP & ScrollToPlugin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollToPlugin.min.js" integrity="sha512-nTHzMQK7lwWt8nL4KF6DhwLHluv6dVq/hNnj2PBN0xMl2KaMm1PM02csx57mmToPAodHmPsipoERRNn4pG7f+Q==" crossorigin="anonymous"></script>
+    <!--Swiper-->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!--ScrollMagic-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+    <!--Lodash-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+      <!--HEADER-->
+      <header>
+        <h1>T. P. O. </h1>
+        <div class="inner">
+          <div class="sub-menu">
+            <ul class="menu">
+              <li>
+                <a href="index.html">Home</a>
+              </li>
+              <li>
+                <a href="login.html">login</a>
+              </li>
+              <li>
+                <a href="index.html" id="logout">logout</a>
+              </li>
+              <li>
+                <a href="upload.html">관리자</a>
+              </li>
+              <li>
+                <a id="userName">  </a>
+              </li>
+              <div class="search">
+                <input type="text" />
+                <span class="material-icons">search</span>
+              </div>           
+            </ul>
+          </div>
+        </div>
+      </header>
+      
+  <!--회원가입 상자-->
+  <div id="container" class="container_main" style="border: 0px solid;">
+    <div style="padding: 20px;"></div>
+    <div class="container_register" 
+    style = "width: 600px;
+    height: 520px;
+    border-radius: 3px;
+    float:left;
+    position: absolute;
+    right: 50%;
+    margin-right: 4px;
+    border: 1px pink solid;"
+    >
+        <div class="re_container">
+                <div class="title_div_re">
+                    <p class="title_p"
+                    style="text-align : center; 
+                    padding-top: 8px;
+                    margin-bottom: 50px; 
+                    font-size: 30px; 
+                    font-weight: bold; 
+                    padding-top: 30px">Register With Us</p>
+                </div>
+                <div>
+                    <div>
+                        <a class="item_name"
+                        style="padding-top: 50px;
+                        margin-left: 32px;
+                        font-size: 18px;
+                        font-weight: bold;">Username</a>
+                    </div>
+                    <div>
+                        <input type="text" name="username" placeholder="name" class="input" id="name-new"
+                        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;"/>
+                    </div>
+                    <div class="text_alert_padding">
+                        <div id="alert_username" class="text_alert"></div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a class="item_name"
+                        style="padding-top: 50px;
+                        margin-left: 32px;
+                        font-size: 18px;
+                        font-weight: bold;">Email</a>
+                        <a 
+                        style="font-size:11px; color: red;" >정확한 주소로 작성해주세요</a>
+                    </div>
+                    <div>
+                        <input type="text" name="email" placeholder="E-mail" class="input" id="email-new"
+                        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;"/>
+                    </div>
+                    <div class="text_alert_padding">
+                        <div id="alert_email" class="text_alert"></div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a class="item_name"
+                        style="padding-top: 50px;
+                        margin-left: 32px;
+                        font-size: 18px;
+                        font-weight: bold;">Password</a>
+                        <a 
+                        style="font-size:11px; color: red;" >6자리 이상 작성해주세요</a>
+                    </div>
+                    <div>
+                        <input type="password" name="password" placeholder="Enter password" class="input" id="pw-new"
+                        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;"/>
+                    </div>
+                    <div class="text_alert_padding">
+                        <div id="alert_password" class="text_alert"></div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <a class="item_name"
+                        style="padding-top: 50px;
+                        margin-left: 32px;
+                        font-size: 18px;
+                        font-weight: bold;">Confirm Password</a>
+                    </div>
+                    <div>
+                        <input type="password" name="password2" onfocus="" placeholder="Enter password again" class="input" 
+                        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;"/>
+                    </div>
+                    <div class="text_alert_padding">
+                        <div id="alert_password2" class="text_alert"></div>
+                    </div>
+                </div>
+                <div style="height: 10px;"></div>
+                <div>
+                    <button type="button" class="submit_button" id="register"
+                    style="width: 95%; 
+                    height: 44px; 
+                    background-color: #ffe7e7; 
+                    border: 1px; 
+                    border-radius: 3px; 
+                    color: black; 
+                    font-size: 17px; 
+                    font-weight: 500;
+                    margin-bottom: 20px;
+                    margin-left: 15px;
+                    margin-top:10px;
+                    box-shadow: 0.5px 0.5px 0 rgb(0,0,0,0.5); 
+                    position: relative; 
+                    top:2px;
+                    cursor:pointer; 
+                    font-weight: bold; 
+                    padding: 8px;">Register</button>
+                </div>
+        </div>
+    </div>
+    <div class="container_login" 
+    style=" width: 600px;
+    height: 520px;
+    position: absolute;
+    left: 50%;
+    border-radius: 3px;
+    margin-left: 4px;
+    border: 1px pink solid">
+      <div class="lo_container">
+        <div class="title_div_lo">
+          <p class="title_login"
+          style="text-align : center; 
+                    padding-top: 8px;
+                    margin-bottom: 80px; 
+                    font-size: 30px; 
+                    font-weight: bold; 
+                    padding-top: 50px">Login</p>
+        </div>
+        <div>
+          <a class="item_name_login"
+          style="padding-top: 50px;
+          margin-left: 32px;
+          font-size: 18px;
+          font-weight: bold;">Email</a>
+        </div>
+        <input type="email" class="form-control" placeholder="email" id="email"
+        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;">
+      </div>
+      <div class="mb-3">
+        <a class="item_name_login"
+          style="padding-top: 50px;
+          margin-left: 32px;
+          font-size: 18px;
+          font-weight: bold;">Password</a>
+        <input type="password" class="form-control" placeholder="pw" id="pw"
+        style="width: 90%; 
+                        margin-left: 32px;
+                        height: 30px; 
+                        border: 1px solid; 
+                        border-radius: 3px; 
+                        margin-top:10px;
+                        margin-bottom: 20px;
+                        margin-bottom:10px;
+                        border-color: gray;">
+      </div>
+      <div style="height: 10px;"></div>
+      <button type="submit" class="btn" id="login"
+      style="width: 95%; 
+                    height: 44px; 
+                    background-color: #ffe7e7; 
+                    border: 1px; 
+                    border-radius: 3px; 
+                    color: black; 
+                    font-size: 17px; 
+                    font-weight: 500;
+                    margin-bottom: 20px;
+                    margin-left: 15px;
+                    margin-top:10px;
+                    box-shadow: 0.5px 0.5px 0 rgb(0,0,0,0.5); 
+                    position: relative; 
+                    top:2px;
+                    cursor:pointer; 
+                    font-weight: bold; 
+                    padding: 8px;">Login</button>
+   </div>
+</div>
+
+  
+
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+
+<script>
+  var firebaseConfig = {
+      apiKey: "AIzaSyBVaapmep0_PuQw1e2gZHXZdRe2AqXhmg4",
+      authDomain: "tpo2-7b5d0.firebaseapp.com",
+      projectId: "tpo2-7b5d0",
+      storageBucket: "tpo2-7b5d0.appspot.com",
+      messagingSenderId: "197250258766",
+      appId: "1:197250258766:web:c9e6260e6a04e30bb9b01f"
+      };
+      firebase.initializeApp(firebaseConfig);
+  </script>
+
+<script>
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    //페이지 마다 아래 코드를 전부 추가해주기
+    var 뺀거 = localStorage.getItem('user');
+
+    if(localStorage.getItem('user') != null){
+      $('#userName').html(JSON.parse(뺀거).displayName)     
+    }
+        
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user){
+                console.log(user.uid)
+                console.log(user.displayName)
+                localStorage.setItem('user', JSON.stringify(user))
+            }
+            
+        })
+        //여기까지
+    
+
+    //로그아웃
+    $('#logout').click(function(){
+      alert("로그아웃 되었습니다.");
+            firebase.auth().signOut()
+            localStorage.removeItem('user')
+        })
+
+    //로그인
+    $('#login').click(function(){
+        
+        var 이메일 = $('#email').val();
+        var 패스워드 = $('#pw').val();
+
+        firebase.auth().signInWithEmailAndPassword(이메일, 패스워드).then((result)=>{
+          window.location.href = '/index.html';
+          alert("로그인이 완료되었습니다. ");
+          console.log(result.user);
+        })
+        })
+
+
+    //회원가입
+    $('#register').click(function(){
+
+    var 이메일 = $('#email-new').val();
+    var 패스워드 = $('#pw-new').val();
+    var 이름 = $('#name-new').val();
+
+    firebase.auth().createUserWithEmailAndPassword(이메일, 패스워드).then((result)=>{
+
+      var 유저정보 = { name : 이름, email : 이메일 }
+      db.collection('user').doc(result.user.uid).set(유저정보).then(()=>{
+
+        alert("회원가입이 완료되었습니다. ");
+        location.reload(true);
+      })
+    
+      console.log(result);
+      console.log(result.user);
+      result.user.updateProfile({displayName:이름});
+
+     
+
+    })
+   
+})
+
+</script>
+
+</body>
+</html>

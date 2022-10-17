@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="./css/search.css">
+  <!--제목-->
+  <title>T.P.O</title>
+  <!--글씨체 적용-->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap');
+  </style>
+
+  <!--파비콘-->
+  <!--<link rel="shortcut icon" href="favicon.ico" />-->
+  <link rel="icon" href="./fabicon.ico" />
+  <!--브라우저 스타일 초기화-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />  
+  <!--Google Material Icons-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="./css/main.css" />
+
+  <!--GSAP & ScrollToPlugin-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/ScrollToPlugin.min.js" integrity="sha512-nTHzMQK7lwWt8nL4KF6DhwLHluv6dVq/hNnj2PBN0xMl2KaMm1PM02csx57mmToPAodHmPsipoERRNn4pG7f+Q==" crossorigin="anonymous"></script>
+  <!--Swiper-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!--ScrollMagic-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <!--Lodash-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+
+  <script src="images/jquery-3.6.0.min.js"></script>
+  <script defer src="./js/main.js"></script>
+</head>
+
+<body>
+  <!--HEADER-->
+  <header>
+    <h1>T. P. O. </h1>
+    <div class="inner">
+      <div class="sub-menu">
+        <ul class="menu">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="login.html">login</a>
+          </li>
+          <li>
+            <a href="index.html" id="logout">logout</a>
+          </li>
+          <li>
+            <a href="upload.html">관리자</a>
+          </li>
+          <li>
+            <a id="userName">  </a>
+          </li>           
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  <!--날씨소개 및 추천 상자, 메인상자-->
+  <section class="visual">
+    <div class="inner">
+      <div class="title fade-in">
+        <article class="current">
+          오늘은 
+        </article>
+      </div>
+      <div class="box2">
+        <p class="icon"></p>
+                <p class="main-title"> < 오늘의 날씨 ></p>
+                <p class="ctemp">현재 온도 : </p>
+                <p class="lowtemp">최저 온도 : </p>
+                <p class="hightemp">최고 온도 : </p>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+        crossorigin="anonymous"></script>
+      </div>
+      <div class="box_main">
+        <li class="classify">
+        <p class="title">성별</p>
+        <label><input type="radio" name="gender" value="man"> 남</label>
+        <label><input type="radio" name="gender" value="woman"> 여</label>
+        </li>
+        <input class="style_search" type="button" value="검색" onclick="location.href='search.html' " />
+        <p class="s_result">검색 결과입니다</p>
+        <form>
+          <select name="sort" >
+            <option value="none">=== 정렬방식 ===</option>
+            <option value="higher">높은 가격순</option>
+            <option value="lower">낮은 가격순</option>
+            <option value="famous">인기 많은순</option>
+          </select>
+        </form>
+        
+      </div>
+      </div>
+    </div>
+      
+
+     <!--날씨 데이터 연결--> 
+     <script>
+      $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=36.6372&lon=127.4897&appid=7667c124fdf9b0b0cc4b2ae61b0fb6a1&units=metric',
+      function(
+          result){
+          $('.ctemp').append(Math.round(result.current.temp)+" °C");
+          $('.lowtemp').append(Math.round(result.daily[0].temp.min)+" °C");
+          $('.hightemp').append(Math.round(result.daily[0].temp.max)+" °C");
+          var wiconUrl = '<img src="http://openweathermap.org/img/wn/'+result.current.weather[0].icon+'.png" alt="'+result.current.weather[0].description+'">'
+          $('.icon').html(wiconUrl);
+          if(result.current.temp <= 20 && result.current.temp > 16)
+          {
+            $('.current').append("맨투맨 입기 좋은 날씨에요");
+          }
+          else if(result.current.temp <= 15 && result.current.temp > 11)
+          {
+            $('.current').append("가디건 입기 좋은 날씨에요");
+          }
+          else if(result.current.temp <= 11)
+          {
+            $('.current').append("롱패딩 입기 좋은 날씨에요");
+          }
+      });
+      </script>
+    </div>
+  </section>
+
+  <!--TO TOP BUTTON-->
+  <div id="to-top">
+    <div class="material-icons">arrow_upward</div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+  <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBmLHmE-X06lL_bFzCL0lQ3EWO6XmMwnY8",
+        authDomain: "tpoweb-2343f.firebaseapp.com",
+        projectId: "tpoweb-2343f",
+        storageBucket: "tpoweb-2343f.appspot.com",
+        messagingSenderId: "441331829888",
+        appId: "1:441331829888:web:132aa41778e94d5b11ea65"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        //페이지 마다 아래 코드를 전부 추가해주기
+    var 뺀거 = localStorage.getItem('user');
+
+    if(localStorage.getItem('user') != null){
+      $('#userName').html(JSON.parse(뺀거).displayName)
+    }
+        
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user){
+                console.log(user.uid)
+                console.log(user.displayName)
+                localStorage.setItem('user', JSON.stringify(user))
+            }
+            
+        })
+        //여기까지
+
+         //로그아웃
+    $('#logout').click(function(){
+      alert("로그아웃 되었습니다.");
+            firebase.auth().signOut()
+            localStorage.removeItem('user')
+        })
+    </script>
+
+</body>
+
+</html>
